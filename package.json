@@ -26,6 +26,8 @@
     "bootstrap-webpack": "0.0.5",
     "create-react-class": "^15.6.3",
     "css-loader": "^1.0.0",
+    "datatables.net": "^1.10.19",
+    "datatables.net-responsive": "^2.2.3",
     "events": "^1.0.2",
     "expect": "^23.0.0",
     "exports-loader": "^0.7.0",
