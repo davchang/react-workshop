@@ -11,7 +11,7 @@ export default function HelloWorld() {
   const tableData = [['mypdf','2.5']]
 
   useEffect(() => {
-    $('table#foo').DataTable( {
+    const = $('table#foo').DataTable( {
       destroy: true,
       empty: true,
       paging: false,
@@ -25,6 +25,11 @@ export default function HelloWorld() {
       },
       bSort: false
     } )
+
+    return (
+      //TODO delete the table using myTable.clear() call
+      myTable.clear()
+    )
   })
 
   return (
