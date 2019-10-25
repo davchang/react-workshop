@@ -1,7 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import ReactTable from 'react-table'
-import 'react-table/react-table.css'
+// import 'react-table/react-table.css'
+// import { ReactTableDefaults } from 'react-table'
 
 const data = [{
   name: 'Tanner Linsley',
@@ -35,38 +36,26 @@ const columns = [{
   accessor: 'friend.age'
 }]
 
+// Object.assign(ReactTableDefaults, {
+//   data: data,
+//   columns: columns,
+//   defaultPageSize: 10,
+//   minRows: 3
+//   // etc...
+// })
+
 function TableExample() {
 
-  return <ReactTable
-    data={data}
-    columns={columns}
-    pageSize={5} // the number of rows per page to be displayed
-    // sortable={true}
-    // resizable={false}
-    // filterable={true}
-    sorted={[{ // the sorting model for the table
-        id: 'name'
-      }, {
-        id: 'age',
-        desc: true
-    }]}
-    expanded={{ // The nested row indexes on the current page that should appear expanded
-      1: true,
-      4: true,
-      5: {
-        2: true,
-        3: true
-      }
-    }}
-    filtered={[{ // the current filters model
-      id: 'name',
-      value: ''
-    }]}
-    resized={[{ // the current resized column model
-      "id": "age",
-      "value": 10.25
-    }]}
-  />
+  return (
+    <>
+      <ReactTable
+        data={data}
+        columns={columns}
+        defaultPageSize={10}
+        minRows={3}
+      />
+    </>
+  )
 }
 
 ReactDOM.render(<TableExample />, document.getElementById("app"));

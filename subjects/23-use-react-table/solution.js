@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
-// import ReactTable from 'react-table'
-import 'react-table/react-table.css'
+import ReactTable from 'react-table'
+// import 'react-table/react-table.css'
 import ViewTable from './ViewTableNew'
 
 const data = [{
