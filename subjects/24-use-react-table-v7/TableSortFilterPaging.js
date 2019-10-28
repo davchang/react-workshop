@@ -405,7 +405,7 @@ function filterGreaterThan(rows, id, filterValue) {
 filterGreaterThan.autoRemove = val => typeof val !== 'number'
 
 
-function TableSortFilter() {
+function TableSortFilterPaging() {
   const columns = React.useMemo(
     () => [
       {
@@ -512,4 +512,4 @@ function TableSortFilter() {
   );
 }
 
-export default TableSortFilter
+export default TableSortFilterPaging
