@@ -1,15 +1,42 @@
 import React from 'react'
-
+import styled from 'styled-components'
 import { useTable, useFilters, useSortBy } from 'react-table'
 
 // A great library for fuzzy filtering/sorting items
 import matchSorter from 'match-sorter'
 
+const Styles = styled.div`
+  padding: 1rem;
 
+  table {
+    border-spacing: 0;
+    border: 1px solid black;
+
+    tr {
+      :last-child {
+        td {
+          border-bottom: 0;
+        }
+      }
+    }
+
+    th,
+    td {
+      margin: 0;
+      padding: 0.5rem;
+      border-bottom: 1px solid black;
+      border-right: 1px solid black;
+
+      :last-child {
+        border-right: 0;
+      }
+    }
+  }
+`
 
 
 // Define a default UI for filtering
-function DefaultColumnFilter({
+export function DefaultColumnFilter({
   column: { filterValue, preFilteredRows, setFilter },
 }) {
   const count = preFilteredRows.length
@@ -27,7 +54,7 @@ function DefaultColumnFilter({
 
 // This is a custom filter UI for selecting
 // a unique option from a list
-function SelectColumnFilter({
+export function SelectColumnFilter({
   column: { filterValue, setFilter, preFilteredRows, id },
 }) {
   // Calculate the options for filtering
@@ -61,7 +88,7 @@ function SelectColumnFilter({
 // This is a custom filter UI that uses a
 // slider to set the filter value between a column's
 // min and max values
-function SliderColumnFilter({
+export function SliderColumnFilter({
   column: { filterValue, setFilter, preFilteredRows, id },
 }) {
   // Calculate the min and max
@@ -96,7 +123,7 @@ function SliderColumnFilter({
 // This is a custom UI for our 'between' or number range
 // filter. It uses two number boxes and filters rows to
 // ones that have values between the two
-function NumberRangeColumnFilter({
+export function NumberRangeColumnFilter({
   column: { filterValue = [], preFilteredRows, setFilter, id },
 }) {
   const [min, max] = React.useMemo(() => {
@@ -263,7 +290,7 @@ function Table( props ) {
 }
 
 // Define a custom filter filter function!
-function filterGreaterThan(rows, id, filterValue) {
+export function filterGreaterThan(rows, id, filterValue) {
   return rows.filter(row => {
     const rowValue = row.values[id]
     return rowValue >= filterValue
@@ -277,14 +304,14 @@ function filterGreaterThan(rows, id, filterValue) {
 filterGreaterThan.autoRemove = val => typeof val !== 'number'
 
 
-function TableView() {
-
+export default function TableView(props) {
+  const { columns, data, disableFilters, disableSorting } = props
 
   return (
     <Styles>
-      <Table columns={columns} data={data} disableFilters={true} disableSorting={true} />
+      <Table columns={columns} data={data} disableFilters={disableFilters} disableSorting={disableSorting} />
     </Styles>
   )
 }
 
-export default TableView
+// export default TableView
