@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useTable, useFilters, useSortBy } from 'react-table'
 
@@ -186,7 +186,8 @@ function Table({ columns, data }) {
 
 */
 function Table( props ) {
-  const { columns, data, disableFilters, disableSorting } = props
+  const { columns, data, disableFilters, disableSorting, disableSearch } = props
+  const [ searchValue, setSearchValue ] = useState('')
 
   const filterTypes = React.useMemo(
     () => ({
@@ -236,14 +237,32 @@ function Table( props ) {
     useSortBy,
   )
 
-  console.log('--rows--', rows)
-  console.log('--state--', state)
   // We don't want to render all 2000 rows for this example, so cap
   // it at 20 for this use case
-  const firstPageRows = rows.slice(0, 20)
+  // const myPageRows = rows.slice(0, 20)
+  let myPageRows = []
+
+  if (!disableSearch) {
+    const searched = Object.keys(rows[0].values)
+    myPageRows = rows.filter((row) => {
+      return searched.some(x => (row.values[x] + '').includes(searchValue))
+    })
+  } else {
+    myPageRows = rows
+  }
+
+  const handleSearch = (event) => {
+    setSearchValue(event.target.value)
+  }
 
   return (
     <>
+      {(!disableSearch) ?  (
+        <div className=''>
+          <input type="search" className='' placeholder='Search Table' value={searchValue} onChange={handleSearch} />
+          <button className=''><span className='' />Search</button>
+        </div>
+      ) : null}
       <table {...getTableProps()}>
         <thead>
           {headerGroups.map(headerGroup => (
@@ -271,7 +290,7 @@ function Table( props ) {
           ))}
         </thead>
         <tbody {...getTableBodyProps()}>
-          {firstPageRows.map(
+          {myPageRows.map(
             (row, i) =>
               prepareRow(row) || (
                 <tr {...row.getRowProps()}>
@@ -286,7 +305,7 @@ function Table( props ) {
         </tbody>
       </table>
       <br />
-      <div>Showing the first 20 results of {rows.length} rows</div>
+      <div>Showing the results of {rows.length} rows</div>
     </>
   )
 }
@@ -307,11 +326,12 @@ filterGreaterThan.autoRemove = val => typeof val !== 'number'
 
 
 export default function TableView(props) {
-  const { columns, data, disableFilters, disableSorting } = props
+  const { columns, data, disableFilters, disableSorting, disableSearch } = props
 
   return (
     <Styles>
-      <Table columns={columns} data={data} disableFilters={disableFilters} disableSorting={disableSorting} />
+      <Table columns={columns} data={data} disableFilters={disableFilters} disableSorting={disableSorting} disableSearch={disableSearch}>
+      </Table>
     </Styles>
   )
 }
