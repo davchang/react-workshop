@@ -353,7 +353,8 @@ function TableSortFilter() {
     []
   )
 
-  const data = React.useMemo(() => makeData(2000), [])
+  const data = React.useMemo(() => makeData(2), [])
+  console.log('--data--', data)
 
   return (
     <Styles>

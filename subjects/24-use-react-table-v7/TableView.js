@@ -236,6 +236,8 @@ function Table( props ) {
     useSortBy,
   )
 
+  console.log('--rows--', rows)
+  console.log('--state--', state)
   // We don't want to render all 2000 rows for this example, so cap
   // it at 20 for this use case
   const firstPageRows = rows.slice(0, 20)

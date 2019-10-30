@@ -55,7 +55,25 @@ function Output(props) {
     []
   )
 
-  const data = React.useMemo(() => makeData(2000), [])
+  // const data = React.useMemo(() => makeData(2), [])
+  // console.log('--data--', data)
+
+  const data = [{
+    age: 24,
+    firstName: "painting",
+    lastName: "parcel",
+    progress: 9,
+    status: "single",
+    visits: 48
+  }, {
+    age: 26,
+    firstName: "sock",
+    lastName: "creature",
+    progress: 63,
+    status: "relationship",
+    visits: 56
+  }]
+
 
   return (
     <TableView columns={columns} data={data} disableFilters={false} disableSorting={false} />
