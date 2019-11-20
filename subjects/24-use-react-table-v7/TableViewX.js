@@ -76,16 +76,16 @@ function Table( props ) {
   // We don't want to render all 2000 rows for this example, so cap
   // it at 20 for this use case
   // const firstPageRows = rows.slice(0, 20)
-  let myPageRows = []
-
-  if (!disableSearch && searchValue) {
-    const searched = Object.keys(rows[0].values)
-    myPageRows = rows.filter((row) => {
-     return searched.some(x => (row.values[x] + '').includes(searchValue))
-    })
-  } else {
-    myPageRows = rows
-  }
+  // let myPageRows = []
+  //
+  // if (!disableSearch && searchValue) {
+  //   const searched = Object.keys(rows[0].values)
+  //   myPageRows = rows.filter((row) => {
+  //    return searched.some(x => (row.values[x] + '').includes(searchValue))
+  //   })
+  // } else {
+  //   myPageRows = rows
+  // }
 
   const handleSearch = (event) => {
     setSearchValue(event.target.value)
@@ -96,8 +96,8 @@ function Table( props ) {
   // Listen for changes in pagination and use the state to fetch our new data
   React.useEffect(() => {
     console.log(pageIndex);
-    fetchData({ pageIndex, pageSize });
-  }, [fetchData, pageIndex, pageSize]);
+    fetchData({ pageIndex, pageSize, searchValue});
+  }, [fetchData, pageIndex, pageSize, searchValue]);
 
 
   return (
@@ -235,10 +235,12 @@ export default function TableViewX(props) {
   const [pageCount, setPageCount] = React.useState(0);
   const fetchIdRef = React.useRef(0);
 
-  const fetchData = React.useCallback(({ pageSize, pageIndex }) => {
+  const fetchData = React.useCallback(({ pageSize, pageIndex, searchValue }) => {
     // Give this fetch an ID
     const fetchID = ++fetchIdRef.current;
 
+    console.log('--searchValue--', searchValue)
+    
     // Set the loading state
     setLoading(true);
 
