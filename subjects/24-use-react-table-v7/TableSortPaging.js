@@ -74,7 +74,7 @@ function Table( props ) {
 
   // We don't want to render all 2000 rows for this example, so cap
   // it at 20 for this use case
-  const firstPageRows = rows.slice(0, 20)
+  // const firstPageRows = rows.slice(0, 20)
 
   // Now we can get our table state from the hoisted table state tuple
 
