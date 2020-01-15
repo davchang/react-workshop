@@ -3,10 +3,10 @@ import ReactDOM from 'react-dom';
 import './index.css';
 // import TableSort from './TableSort';
 // import TableSortPaging from './TableSortPaging';
-import TablePaging from './TablePaging';
+import TableSortPaging from './TableSortPaging';
 // import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(<TablePaging />, document.getElementById('app'));
+ReactDOM.render(<TableSortPaging />, document.getElementById('app'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

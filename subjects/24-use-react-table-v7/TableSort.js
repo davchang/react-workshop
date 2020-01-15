@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useTable, useSortBy } from 'react-table'
+// import ReactTable from 'react-table'
 
 import makeData from './makeData'
 
@@ -33,7 +34,7 @@ const Styles = styled.div`
   }
 `
 
-function Table({ columns, data }) {
+function Table({ columns, data, disableSorting, defaultSorted }) {
   const {
     getTableProps,
     getTableBodyProps,
@@ -44,7 +45,8 @@ function Table({ columns, data }) {
     {
       columns,
       data,
-      disableSorting: true,
+      disableSorting: {disableSorting},
+      initialState: { sortBy: defaultSorted },
     },
     useSortBy,
   )
@@ -125,7 +127,7 @@ function TableSort() {
           {
             Header: 'Visits',
             accessor: 'visits',
-            disableSorting: true
+            disableSortBy: true
           },
           {
             Header: 'Status',
@@ -142,11 +144,18 @@ function TableSort() {
     []
   )
 
+  const defaultSorted=[
+    {
+      id: "age",
+      desc: true
+    }
+  ]
+
   const data = React.useMemo(() => makeData(2000), [])
 
   return (
     <Styles>
-      <Table columns={columns} data={data} />
+      <Table columns={columns} data={data} disableSorting={false} defaultSorted={defaultSorted}/>
     </Styles>
   )
 }
