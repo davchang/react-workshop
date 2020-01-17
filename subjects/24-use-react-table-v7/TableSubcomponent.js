@@ -173,13 +173,14 @@ function TableSubcomponent() {
   // Create a function that will render our row sub components
   const renderRowSubComponent = React.useCallback(
     ({ row }) => (
-      <pre
-        style={{
-          fontSize: '10px',
-        }}
-      >
-        <code>{JSON.stringify({ values: row.values }, null, 2)}</code>
-      </pre>
+      // <pre
+      //   style={{
+      //     fontSize: '10px',
+      //   }}
+      // >
+      //   <code>{JSON.stringify({ values: row.values }, null, 2)}</code>
+      // </pre>
+      console.log('--row.values--', row.values)
     ),
     []
   )
