@@ -39,8 +39,8 @@ function Table({ columns: userColumns, data }) {
     getTableBodyProps,
     headerGroups,
     rows,
-    prepareRow
-    // state: { expanded }
+    prepareRow,
+    state: { expanded }
   } = useTable(
     {
       columns: userColumns,
@@ -50,8 +50,7 @@ function Table({ columns: userColumns, data }) {
           () => ({
             ...state,
             expanded: true,
-          }),
-          [state, expanded]
+          })
         )
       }
     },

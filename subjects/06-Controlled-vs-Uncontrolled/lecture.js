@@ -2,18 +2,18 @@ import React, { useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
 import serializeForm from "form-serialize";
 
-function App() {
-  return (
-    <div>
-      <h1>Forms</h1>
-      <form>
-        <input type="text" />
-      </form>
-    </div>
-  );
-}
-
-ReactDOM.render(<App />, document.getElementById("app"));
+// function App() {
+//   return (
+//     <div>
+//       <h1>Forms</h1>
+//       <form>
+//         <input type="text" />
+//       </form>
+//     </div>
+//   );
+// }
+//
+// ReactDOM.render(<App />, document.getElementById("app"));
 
 ////////////////////////////////////////////////////////////////////////////////
 // Give the <input> a default value.
@@ -28,7 +28,7 @@ ReactDOM.render(<App />, document.getElementById("app"));
 //     </div>
 //   );
 // }
-
+//
 // ReactDOM.render(<App />, document.getElementById("app"));
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -38,7 +38,7 @@ ReactDOM.render(<App />, document.getElementById("app"));
 //   function handleChange(event) {
 //     console.log(event.target.value);
 //   }
-
+//
 //   return (
 //     <div>
 //       <h1>Forms</h1>
@@ -52,35 +52,35 @@ ReactDOM.render(<App />, document.getElementById("app"));
 //     </div>
 //   );
 // }
-
+//
 // ReactDOM.render(<App />, document.getElementById("app"));
 
 ////////////////////////////////////////////////////////////////////////////////
 // Or use a ref.
 
-// function App() {
-//   const inputRef = useRef();
+function App() {
+  const inputRef = useRef();
 
-//   function handleChange(event) {
-//     console.log(inputRef.current.value);
-//   }
+  function handleChange(event) {
+    console.log(inputRef.current.value);
+  }
 
-//   return (
-//     <div>
-//       <h1>Forms</h1>
-//       <form>
-//         <input
-//           type="text"
-//           defaultValue="cupcakes"
-//           onChange={handleChange}
-//           ref={inputRef}
-//         />
-//       </form>
-//     </div>
-//   );
-// }
+  return (
+    <div>
+      <h1>Forms</h1>
+      <form>
+        <input
+          type="text"
+          defaultValue="cupcakes"
+          onChange={handleChange}
+          ref={inputRef}
+        />
+      </form>
+    </div>
+  );
+}
 
-// ReactDOM.render(<App />, document.getElementById("app"));
+ReactDOM.render(<App />, document.getElementById("app"));
 
 ////////////////////////////////////////////////////////////////////////////////
 // Or you can "control" the <input> and have its value in state.
@@ -88,11 +88,11 @@ ReactDOM.render(<App />, document.getElementById("app"));
 
 // function App() {
 //   const [inputValue, setInputValue] = useState("cupcakes");
-
+//
 //   function handleChange(event) {
 //     setInputValue(event.target.value);
 //   }
-
+//
 //   return (
 //     <div>
 //       <h1>Forms</h1>
@@ -103,7 +103,31 @@ ReactDOM.render(<App />, document.getElementById("app"));
 //     </div>
 //   );
 // }
+//
+// ReactDOM.render(<App />, document.getElementById("app"));
 
+// DC
+// DC useRef and useState
+// DC
+// function App() {
+//   const inputRef = useRef();
+//   const [inputValue, setInputValue] = useState("cupcakes");
+//
+//   function handleChange(event) {
+//     setInputValue(inputRef.current.value);
+//   }
+//
+//   return (
+//     <div>
+//       <h1>Forms</h1>
+//       <form>
+//         <input type="text" ref={inputRef} value={inputValue} onChange={handleChange} />
+//       </form>
+//       <div>{inputValue}</div>
+//     </div>
+//   );
+// }
+//
 // ReactDOM.render(<App />, document.getElementById("app"));
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -111,11 +135,11 @@ ReactDOM.render(<App />, document.getElementById("app"));
 
 // function App() {
 //   const [inputValue, setInputValue] = useState("cupcakes");
-
+//
 //   function handleChange(event) {
 //     setInputValue(event.target.value);
 //   }
-
+//
 //   return (
 //     <div>
 //       <h1>Forms</h1>
@@ -134,7 +158,7 @@ ReactDOM.render(<App />, document.getElementById("app"));
 //     </div>
 //   );
 // }
-
+//
 // ReactDOM.render(<App />, document.getElementById("app"));
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -149,7 +173,8 @@ ReactDOM.render(<App />, document.getElementById("app"));
 //     const values = serializeForm(event.target, { hash: true });
 //     console.log(values);
 //   }
-
+//
+//   console.log('--1--')
 //   return (
 //     <div>
 //       <h1>Forms</h1>
@@ -164,14 +189,14 @@ ReactDOM.render(<App />, document.getElementById("app"));
 //             />
 //           </label>
 //         </p>
-
+//
 //         <p>
 //           <label>
 //             Last Name:{" "}
 //             <input name="lastName" defaultValue="Jackson" type="text" />
 //           </label>
 //         </p>
-
+//
 //         <p>
 //           <button type="submit">Save</button>
 //         </p>
@@ -179,7 +204,7 @@ ReactDOM.render(<App />, document.getElementById("app"));
 //     </div>
 //   );
 // }
-
+//
 // ReactDOM.render(<App />, document.getElementById("app"));
 
 ////////////////////////////////////////////////////////////////////////////////
