@@ -4,46 +4,55 @@
 // - Change the contents of the render function and save the file
 // - See the updates automatically in your browser without refreshing!
 ////////////////////////////////////////////////////////////////////////////////
-import React, { useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import serializeForm from "form-serialize"
 import axios from 'axios'
 // import postAPI from './utils/postApi'
 
 function App() {
-  const [msg, setMsg] = useState('')
+  const [data, setData] = useState('')
+  const [payload, setPayload] = useState('')
 
-  async function postAPI(url, payload) {
-    const options = {
-      method: 'POST',
-      url: url,
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json;charset=UTF-8'
-      },
-      data: payload
-    }
-
-    let response = await axios(options)
-    let responseOK = response && response.status === 200 && response.statusText === 'OK';
-    if (responseOK) {
-        let data = await response.data;
-        setMsg(data.statusText)
-    }
-  }
+  // async function postAPI(url, payload) {
+  //   const options = {
+  //     method: 'POST',
+  //     url: url,
+  //     headers: {
+  //       'Accept': 'application/json',
+  //       'Content-Type': 'application/json;charset=UTF-8'
+  //     },
+  //     data: payload
+  //   }
+  //
+  //   let response = await axios(options)
+  //   let responseOK = response && response.status === 200 && response.statusText === 'OK';
+  //   if (responseOK) {
+  //       let data = await response.data;
+  //       setMsg(data.statusText)
+  //   }
+  // }
 
   function handleSubmit(event) {
-    event.preventDefault();
-    console.log('--', event.target)
+    // event.preventDefault();
     const payload = serializeForm(event.target, { hash: true });
-    console.log(payload);
-
-    postAPI('http://localhost:8765/testForm', payload)
+    setPayload(JSON.stringify(payload))
   }
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await axios.post('http://localhost:8765/testForm', payload);
+      // setData(result.data.statusText);
+    };
+
+    if (payload !== '') {
+      fetchData()
+    }
+  }, [payload]);
 
   return (
     <>
-      {msg ? <p>{msg}</p> : <></>}
+      {data ? <p>{data}</p> : <p>{'---'}</p>}
 
       <h2>HTML Forms</h2>
       {/* <form action="http://localhost:8765/testForm" method='post'>   */}
