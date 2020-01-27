@@ -8,15 +8,38 @@ const useDataApi = (initialUrl, initialData) => {
   const [isError, setIsError] = useState(false);
 
   useEffect(() => {
+    // const fetchData = async () => {
+    //   setIsError(false);
+    //   setIsLoading(true);
+    //   try {
+    //     const result = await axios(url);
+    //     setData(result.data);
+    //   } catch (error) {
+    //     setIsError(true);
+    //   }
+    //   setIsLoading(false);
+    // };
+
     const fetchData = async () => {
       setIsError(false);
       setIsLoading(true);
+
       try {
         const result = await axios(url);
         setData(result.data);
-      } catch (error) {
+      } catch(e) {
         setIsError(true);
+        if (e && e.response && e.response.data) {
+          console.log(e.response.data);
+          console.log(e.response.status);
+          console.log(e.response.headers);
+        } else if (e.request) {
+          console.log(e.request);
+        } else if (e.name === 'Error' && e.message ) {
+          console.log('Error', error.message);
+        }
       }
+
       setIsLoading(false);
     };
 
@@ -30,6 +53,7 @@ function App() {
   const [query, setQuery] = useState('redux');
   const [ { data, isLoading, isError }, doFetch ] = useDataApi(
     'https://hn.algolia.com/api/v1/search?query=redux',
+    // 'http://localhost:8765/search',
     { hits: [] },
   );
 
