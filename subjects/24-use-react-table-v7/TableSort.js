@@ -100,19 +100,41 @@ function Table({ columns, data, disableSorting, defaultSorted }) {
   )
 }
 
+function handleClick(row) {
+  // e.preventDefault()
+  // e.stopPropagation()
+  // console.log('--0--', e)
+  console.log('--1--', row.row.values)
+  console.log('--1--', row)
+}
+
 function TableSort() {
   const columns = React.useMemo(
     () => [
+      {
+        Header: 'PDF',
+        accessor: '',
+
+        Cell: row => (<><button key='' onClick={(e) => { handleClick(row) }}>Click Me</button></>)
+        // Cell: row => (<code>{JSON.stringify({ values: row.values }, null, 2)}</code>)
+      },
       {
         Header: 'Name',
         columns: [
           {
             Header: 'First Name',
-            accessor: 'firstName',
+            accessor: 'firstName'
           },
           {
             Header: 'Last Name',
             accessor: 'lastName',
+            Cell: row => (<pre
+                style={{
+                  fontSize: '10px',
+                }}
+              >
+                <code>{JSON.stringify({ values: row.row.values }, null, 2)}</code>
+              </pre>)
           },
         ],
       },
@@ -154,9 +176,11 @@ function TableSort() {
   const data = React.useMemo(() => makeData(2000), [])
 
   return (
-    <Styles>
+    <>
       <Table columns={columns} data={data} disableSorting={false} defaultSorted={defaultSorted}/>
-    </Styles>
+
+
+    </>
   )
 }
 
