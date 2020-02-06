@@ -108,6 +108,10 @@ function handleClick(row) {
   console.log('--1--', row)
 }
 
+function MyCell({ value, columnProps: { rest: { someFunc } } }) {
+  return <a href="#" onClick={someFunc}>{value}</a>
+}
+
 function TableSort() {
   const columns = React.useMemo(
     () => [
@@ -123,7 +127,15 @@ function TableSort() {
         columns: [
           {
             Header: 'First Name',
-            accessor: 'firstName'
+            // accessor: 'firstName',
+            id: 'firstName',
+            accessor: ( d ) => {
+              if (d.firstName.indexOf('m') > -1) {
+                return d.firstName
+              } else {
+                return 'N/A'
+              }
+            }
           },
           {
             Header: 'Last Name',
@@ -159,6 +171,8 @@ function TableSort() {
           {
             Header: 'Profile Progress',
             accessor: 'progress',
+            // Cell: MyCell,
+            // getProps: () => ({ someFunc: () => alert("clicked")})
           },
         ],
       },
