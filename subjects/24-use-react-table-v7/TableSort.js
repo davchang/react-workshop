@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { useTable, useSortBy } from 'react-table'
 // import ReactTable from 'react-table'
+import axios from 'axios'
 
 import makeData from './makeData'
 
@@ -100,19 +101,88 @@ function Table({ columns, data, disableSorting, defaultSorted }) {
   )
 }
 
+// function handlePDFLinkClick(row) {
+//   // e.preventDefault()
+//   // e.stopPropagation()
+//   // console.log('--0--', e)
+//   console.log('--1--', row.row.values)
+//   console.log('--2--', row.cell.value)
+// }
+
+const fetchData = async (url) => {
+  return await axios.get(url)
+}
+
+function handleClick(myValue) {
+  // e.preventDefault()
+  // e.stopPropagation()
+  // console.log('--0--', e)
+  console.log('--1--', myValue)
+  const x = 'LSTHD8'
+  const baseUrl = 'https://www.strongtie.com'
+  const searchUrl = '/search?v=' + x + '%3Arelevance&format=json'
+  const url = baseUrl + searchUrl
+  let windowReference
+
+  const getPDPUrl = async () => {
+    try {
+      const result = await fetchData(url)
+      if (result && result.data && result.data.results && result.data.results.product &&
+        result.data.results.product.searchPageData && result.data.results.product.searchPageData.results[0]) {
+        const PDPUrl = result.data.results.product.searchPageData.results[0].url
+        console.log('--result PDPurl --', PDPUrl)
+        windowReference = window.open( baseUrl + PDPUrl, 'PDP Window' )
+        if (window.focus) {
+          windowReference.focus();
+        }
+      }
+    } catch (error) {
+      console.log('--search API error--', error)
+    }
+  }
+
+  getPDPUrl()
+}
+
+function MyCell({ value, columnProps: { rest: { someFunc } } }) {
+  return <a href="#" onClick={someFunc}>{value}</a>
+}
+
 function TableSort() {
   const columns = React.useMemo(
     () => [
+      {
+        Header: 'PDF',
+        accessor: '',
+
+        // Cell: row => (<><button key='' onClick={(e) => { handlePDFLinkClick(row) }}>Click Me</button></>)
+        // Cell: row => (<code>{JSON.stringify({ values: row.values }, null, 2)}</code>)
+      },
       {
         Header: 'Name',
         columns: [
           {
             Header: 'First Name',
-            accessor: 'firstName',
+            // accessor: 'firstName',
+            id: 'firstName',
+            accessor: ( d ) => {
+              // if (d.firstName.indexOf('m') > -1) {
+                return d.firstName
+              // } else {
+              //   return 'N/A'
+              // }
+            }
           },
           {
             Header: 'Last Name',
             accessor: 'lastName',
+            Cell: row => (<pre
+                style={{
+                  fontSize: '10px',
+                }}
+              >
+                <code>{JSON.stringify({ values: row.row.values }, null, 2)}</code>
+              </pre>)
           },
         ],
       },
@@ -137,6 +207,7 @@ function TableSort() {
           {
             Header: 'Profile Progress',
             accessor: 'progress',
+            Cell: row => (<button onClick={(e) => { handleClick(row.cell.value) }}>{row.cell.value}</button>)
           },
         ],
       },
@@ -151,12 +222,15 @@ function TableSort() {
     }
   ]
 
-  const data = React.useMemo(() => makeData(2000), [])
+  // const data = React.useMemo(() => makeData(2000), [])
+  const data = React.useMemo(() => makeData(10), [])
 
   return (
-    <Styles>
+    <>
       <Table columns={columns} data={data} disableSorting={false} defaultSorted={defaultSorted}/>
-    </Styles>
+
+
+    </>
   )
 }
 
