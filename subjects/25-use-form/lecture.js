@@ -1,70 +1,145 @@
-////////////////////////////////////////////////////////////////////////////////
-// Exercise:
-//
-// - Change the contents of the render function and save the file
-// - See the updates automatically in your browser without refreshing!
-////////////////////////////////////////////////////////////////////////////////
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment, useState, useCallback } from "react";
 import ReactDOM from "react-dom";
-import serializeForm from "form-serialize"
 import axios from 'axios'
-// import postAPI from './utils/postApi'
+import { useDropzone } from 'react-dropzone'
+import serializeForm from "form-serialize"
+
+const postRequest = async (url, payload, options) => {
+  return await axios.post(url, payload, options)
+}
+
+const options = {
+  headers: {
+    'Accept': 'application/json',
+    'Content-Type': 'multipart/form-data'
+  }
+}
+
+// let attachments = []
+
 
 function App() {
-  const [data, setData] = useState('')
-  const [payload, setPayload] = useState('')
+  console.log('------0------')
+  const [ attachments, setAttachments ] = useState([])
+  let myFile = {}
 
-  // async function postAPI(url, payload) {
-  //   const options = {
-  //     method: 'POST',
-  //     url: url,
-  //     headers: {
-  //       'Accept': 'application/json',
-  //       'Content-Type': 'application/json;charset=UTF-8'
-  //     },
-  //     data: payload
-  //   }
-  //
-  //   let response = await axios(options)
-  //   let responseOK = response && response.status === 200 && response.statusText === 'OK';
-  //   if (responseOK) {
-  //       let data = await response.data;
-  //       setMsg(data.statusText)
-  //   }
-  // }
+  const onDrop = useCallback(acceptedFiles => {
+    const reader = new FileReader()
+    reader.onabort = () => console.log('file reading was aborted')
+    reader.onerror = () => console.log('file reading has failed')
+    reader.onload = (e) => {
+      e.preventDefault()
+      e.stopPropagation()
+      // Do whatever you want with the file contents
+      myFile.result = reader.result
+      // attachments.push(myFile)
+      console.log('---onDrop get result--', myFile.result)
+      // fileContent = binaryStr
+      // dispatch({type: 'UPLOAD', payload: JSON.parse(binaryStr)})
+    }
+    // acceptedFiles.forEach(file => reader.readAsBinaryString(file))
+    acceptedFiles.forEach(( file ) => {
+      myFile = {}
+      myFile.path = file.path
+      myFile.type = file.type
+      myFile.size = file.size
+      setAttachments([ myFile ].concat(attachments))
 
-  function handleSubmit(event) {
-    // event.preventDefault();
-    const payload = serializeForm(event.target, { hash: true });
-    setPayload(JSON.stringify(payload))
+      if ((file.type).indexOf('image') > -1) {
+        reader.readAsArrayBuffer(file)   // for PNG file
+      } else {
+        reader.readAsBinaryString(file)  // for text file
+      }
+    })
+
+    console.log('---onDrop--acceptedFiles--', acceptedFiles)
+  }, [])
+
+
+  // {noDragEventsBubbling: true}
+  // {noClick: true}
+  // const options = Object.assign({}, {onDrop}, {noDragEventsBubbling: true})
+  const {acceptedFiles, getRootProps, getInputProps, isDragActive} = useDropzone({onDrop}) // {onDrop})
+  const getDropzoneInputProps = Object.assign({}, getInputProps(), {multiple: false})
+
+  function handleSubmit(e) {
+    e.preventDefault()
+    e.stopPropagation()
+
+    // // fileInput is a HTMLInputElement: <input type="file" multiple id="myfileinput">
+    // const fileInput = document.getElementById("myfileinput");
+    // // files is a FileList object (simliar to NodeList)
+    // const files = fileInput.files;
+    // console.log('--files--', files)
+
+    const url = 'http://dvrapiqas01:8080/pfd/feedbacks/v2?sheet-id=5724870811117444'
+    const columns = {
+      "name": 'name from UI',
+      "status": 'status from UI',
+      "remaining": 'remaining from UI'
+    }
+
+    // const blob = new Blob([JSON.stringify(obj, null, 2)], {type : 'application/json'});
+    console.log('--handleSubmit--attachments--', attachments)
+    let payload = new FormData();
+    payload.append('columns', JSON.stringify(columns))
+    attachments.forEach((file) => {
+      const blob = new Blob([ file.result ], { type: file.type });
+      payload.append('files', blob, file.path)
+    })
+    payload.append('emails', 'dchang@strongtie.com')
+
+    const doSend = async () => {
+      try {
+        const result = await postRequest(url, payload, options)
+      } catch (error) {
+        console.log('--error--', error)
+      }
+    }
+
+    doSend()
   }
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await axios.post('http://localhost:8765/testForm', payload);
-      // setData(result.data.statusText);
-    };
-
-    if (payload !== '') {
-      fetchData()
-    }
-  }, [payload]);
+  console.log('---attachments--', attachments)
+  const files = attachments.map(file => (
+    <li key={file.path}>
+      {file.path} - {file.size} bytes
+    </li>
+  ))
 
   return (
     <>
-      {data ? <p>{data}</p> : <p>{'---'}</p>}
+{/*
+      <section className="container">
+        <div {...getRootProps()} style={{border: '1px dotted red', paddings: '20px 20px 20px 20px'}}>
+          <input {...getDropzoneInputProps} />
+          <p>Drag 'n' drop some files here, or click to select files</p>
+        </div>
+        <aside>
+          <h4>Files</h4>
+          <ul>{files}</ul>
+        </aside>
+      </section>
+*/}
 
-      <h2>HTML Forms</h2>
-      {/* <form action="http://localhost:8765/testForm" method='post'>   */}
       <form onSubmit={handleSubmit}>
-        First name:<br/>
-        <input type="text" name="firstname" defaultValue="Mickey3"></input>
-        <br/>
-        Last name:<br/>
-        <input type="text" name="lastname" defaultValue="Mouse4"></input>
-        <br/><br/>
+        <aside>
+          <h4>Files</h4>
+          <ul>{files}</ul>
+        </aside>
+        <div className="fileUploadZone" {...getRootProps()}>
+          <span className="">
+            <span>Drag and drop a file here or </span>
+            <button type="button" className="button -link">
+              <span className="button__text">browse files</span>
+            </button>
+          </span>
+          <input id='myfileinput' {...getDropzoneInputProps} />
+        </div>
+
         <input type="submit" value="Submit"></input>
       </form>
+
     </>
   )
 }
