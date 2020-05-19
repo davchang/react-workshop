@@ -47,7 +47,7 @@ function App() {
 
   return (
     <>
-      <form id={'myFormId'} name={'columns'} action="http://dvrapiqas01:8080/pfd/feedbacks/v2?sheet-id=5724870811117444"
+      <form id={'myFormId'} name={'columns'} action="http://[my-host]:8080/pfd/feedbacks/v2?sheet-id=[my-sheet-id]"
             method='post' onSubmit={handleSubmit} encType="multipart/form-data">
 
         Name: <input type="text" name="name" onChange={handleNameChange} value={name}></input>

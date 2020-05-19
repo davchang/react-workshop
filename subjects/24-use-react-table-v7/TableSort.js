@@ -119,7 +119,7 @@ function handleClick(myValue) {
   // console.log('--0--', e)
   console.log('--1--', myValue)
   const x = 'LSTHD8'
-  const baseUrl = 'https://www.strongtie.com'
+  const baseUrl = 'https://[URL]'
   const searchUrl = '/search?v=' + x + '%3Arelevance&format=json'
   const url = baseUrl + searchUrl
   let windowReference

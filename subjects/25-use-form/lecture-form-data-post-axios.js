@@ -38,7 +38,7 @@ function App() {
     e.preventDefault()
     e.stopPropagation()
 
-    const url = 'http://dvrapiqas01:8080/pfd/feedbacks/v2?sheet-id=1321178162849668'
+    const url = 'http://[my-host]:8080/pfd/feedbacks/v2?sheet-id=[my-sheet-id]'
     const columns = {
       "name": name,
       "status": status,

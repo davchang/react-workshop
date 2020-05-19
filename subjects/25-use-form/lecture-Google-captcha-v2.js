@@ -3,7 +3,7 @@ import ReactDOM from "react-dom"
 import axios from 'axios'
 import { useDropzone } from 'react-dropzone'
 import serializeForm from "form-serialize"
-import { GoogleReCaptchaProvider, useGoogleReCaptcha } from 'react-google-recaptcha-v3'
+import ReCAPTCHA from "react-google-recaptcha"
 
 const postRequest = async (url, payload, options) => {
   return await axios.post(url, payload, options)
@@ -35,47 +35,10 @@ https://www.google.com/recaptcha/api2/reload?k=[my-site-key]
 */
 function App() {
   const [message, setMessage] = useState('')
-  const { executeRecaptcha } = useGoogleReCaptcha();
-  console.log('--1--')
+  const recaptchaRef = React.createRef()
 
-  // const handlePostCall = async (recaptchaValue) => {
-  //   console.log('--3--')
-  //   const url = 'http://[my-host]:8080/pfd/feedbacks/v2?sheet-id=[my-sheet-id]'
-  //   const columns = {
-  //     "name": 'dchang',
-  //     "status": 'summary...',
-  //     "remaining": 'desc...'
-  //   }
-  //   let payload = new FormData();
-  //   payload.append('columns', JSON.stringify(columns))
-  //   payload.append('g-recaptcha-response', recaptchaValue)
-  //   payload.append('debug', false)
-  //   const doSend = async () => {
-  //     try {
-  //       const result = await postRequest(url, payload, options)
-  //       setMessage('send feedback successfully')
-  //
-  //     } catch (error) {
-  //       console.log('--error--', error)
-  //       setMessage('send feedback failed - ' + error)
-  //     }
-  //   }
-  //   doSend()
-  // }
-  //
-  // const handleRecaptchaChange = (value) => {
-  //   console.log('--2--')
-  //   console.log("Captcha value:", value)
-  //   handlePostCall(value)
-  // }
-
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    e.stopPropagation()
-
-    const token = await executeRecaptcha("");
-    console.log('--2--', token)
-
+  const handlePostCall = async (recaptchaValue) => {
+    console.log('--3--')
     const url = 'http://[my-host]:8080/pfd/feedbacks/v2?sheet-id=[my-sheet-id]'
     const columns = {
       "name": 'dchang',
@@ -84,21 +47,32 @@ function App() {
     }
     let payload = new FormData();
     payload.append('columns', JSON.stringify(columns))
-    payload.append('g-recaptcha-response', token)
+    payload.append('g-recaptcha-response', recaptchaValue)
     payload.append('debug', false)
     const doSend = async () => {
       try {
         const result = await postRequest(url, payload, options)
         setMessage('send feedback successfully')
-        console.log('--3--')
 
       } catch (error) {
         console.log('--error--', error)
         setMessage('send feedback failed - ' + error)
       }
     }
-
     doSend()
+  }
+
+  const handleRecaptchaChange = (value) => {
+    console.log('--2--')
+    console.log("Captcha value:", value)
+    handlePostCall(value)
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    recaptchaRef.current.execute()
+    console.log('--1--')
   }
 
   return (
@@ -107,26 +81,19 @@ function App() {
       <form onSubmit={handleSubmit}>
 
         <br/><br/>
-{/*
+
         <ReCAPTCHA
           ref={recaptchaRef}
           size="invisible"
           sitekey="[my-site-key]"
           onChange={handleRecaptchaChange}>
         </ReCAPTCHA>
-*/}
+
         <input type="submit" value="Submit"></input>
       </form>
 
     </div>
   )
 }
-//  [my-host] : "[my-site-key]"
-// localhost : "[my-localhost-key]"
-ReactDOM.render(
-  <GoogleReCaptchaProvider
-    reCaptchaKey= "[my-site-key]"
-  >
-    <App />
-  </GoogleReCaptchaProvider>, document.getElementById('app')
-)
+
+ReactDOM.render(<App />, document.getElementById("app"));
