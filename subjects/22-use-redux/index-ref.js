@@ -39,7 +39,7 @@ export default function HelloWorld() {
 
   return (
     <>
-      <FormGroup ref={refA} label="Button A">
+      <FormGroup ref={refA} label="Button A" popoverText={"xxxxxxxxx"}>
         <div>
           <div>
             <div>
@@ -52,7 +52,7 @@ export default function HelloWorld() {
       </FormGroup>
 
 
-      <FormGroup ref={refB} label="Button B">
+      <FormGroup ref={refB} label="Button B" popoverText={"yyyyyyyyyyyy"}>
         <div>
           <div>
             <FancyButton ref={refB} >ButtonB Click me!</FancyButton>

@@ -1,0 +1,264 @@
+{
+  "loadTypeInitData": {
+    "info": "Defines whether the input load is due to wind or seismic forces. Designer is to input the controlling load and cracked concrete when appropriate.",
+    "options": [
+      { "value": "wind", "label": "Wind" },
+      { "value": "earthquake", "label": "Earthquake" },
+      { "value": "other", "label": "Other" }
+    ]
+  },
+  "designCodeData": {
+    "info": "Select the edition of the International Building Code that the solution is to be designed to.",
+    "options": [
+      { "value": "21", "label": "IBC 2015" },
+      { "value": "22", "label": "IBC 2018" },
+      { "value": "20", "label": "IBC 2012" }
+    ]
+  },
+  "lumberSpeciesData": {
+    "info": "Select the type of wood member species",
+    "options": [
+      { "value": "1", "label": "Douglas Fir-Larch (DF)" },
+      { "value": "3", "label": "Southern Pine (SP)" },
+      { "value": "4", "label": "Spruce-Pine-Fir (SPF)" },
+      { "value": "2", "label": "Hem Fir (HF)" },
+      { "value": "61", "label": "Structural Composite Lumber (SCL)" }
+    ]
+  },
+  "wallThicknessData": {
+    "options": [
+      { "value": "3.5", "label": "4\"" },
+      { "value": "5.5", "label": "6\"" },
+      { "value": "7.25", "label": "8\"" }
+    ]
+  },
+  "holdownFastenersTypeData": {
+    "info": "Select the type of fasteners which will be specified with the holdown, if no preference please chose \"Any\".",
+    "options": [
+      { "value": "0", "label": "Any" },
+      { "value": "1", "label": "Screws" },
+      { "value": "2", "label": "Bolts" },
+      { "value": "3", "label": "Nails" }
+    ]
+  },
+  "holdownFastenersModelData": {
+    "options": {
+      "0": [
+        { "value": "0", "label": "Any" }
+      ],
+      "2": [
+        { "value": "0", "label": "Any" },
+        { "value": "21", "label": "5/8\" Machine Bolt" },
+        { "value": "14", "label": "3/4\" Machine Bolt" },
+        { "value": "31", "label": "7/8\" Machine Bolt" },
+        { "value": "32", "label": "1\" Machine Bolt" }
+      ],
+      "1": [
+        { "value": "0", "label": "Any" },
+        { "value": "68", "label": "SD Screw #9 x 1 1/2\"" },
+        { "value": "70", "label": "SD Screw #10 x 1 1/2\"" },
+        { "value": "71", "label": "SD Screw #10 x 2 1/2\"" },
+        { "value": "88", "label": "SDS Screw 1/4\" x 2 1/2\"" },
+        { "value": "93", "label": "SDS Screw 1/4\" x 3\"" }
+      ],
+      "3": [
+        { "value": "0", "label": "Any" },
+        { "value": "1", "label": "0.148\" x 3\" (10d Common)" },
+        { "value": "2", "label": "0.148\" x 1 1/2\" (N10)" },
+        { "value": "4", "label": "0.162\" x 2 1/2\" (N16)" },
+        { "value": "36", "label": "0.148\" x 3 1/4\" (16d Sinker)" },
+        { "value": "3", "label": "0.162\" x 3 1/2\" (16d Common)" }
+      ]
+    }
+  },
+  "compressiveStrengthData": {
+    "info": "Specified compressive strength of concrete, f\"c (psi), in accordance with ACI 318. Value must be in the range of 2,500 psi to 4,000 psi.",
+    "options": [
+      { "value": "0", "label": "2,500 psi" },
+      { "value": "1", "label": "3,000 psi" },
+      { "value": "3", "label": "4,000 psi" }
+    ],
+    "optionsB": [
+      { "value": "0", "label": "2,500 psi" }
+    ]
+  },
+  "anchorageOptionData": {
+    "options": {
+      "cmu": [
+        { "value": "0", "label": "Cast-in-Place Anchors" }
+      ],
+      "concrete": [
+        { "value": "0", "label": "Cast-in-Place Anchors" },
+        { "value": "1", "label": "Adhesive Anchors" },
+        { "value": "2", "label": "Mechanical Anchors" }
+      ]
+    }
+  },
+  "installOverSheathingData": {
+    "info": "Select \"Yes\" if the connector will be installed on top of wall sheathing or \"No\" for directly to the end post.",
+    "options": [
+      { "value": "false", "label": "No" },
+      { "value": "true", "label": "Yes" }
+    ]
+  },
+
+  "raisedFloorData": {
+    "info": "Select \"yes\" if the solution is located on a wood floor system.",
+    "options": [
+      { "value": "false", "label": "No" },
+      { "value": "true", "label": "Yes" }
+    ]
+  },
+  "materialTypeData": {
+    "options": [
+      { "value": "concrete", "label": "Concrete" },
+      { "value": "cmu", "label": "CMU" }
+    ],
+    "optionsB": [
+      { "value": "concrete", "label": "Concrete" }
+    ]
+  },
+  "twoPourInstallData": {
+    "options": [
+      { "value": "false", "label": "No" },
+      { "value": "true", "label": "Yes" }
+    ]
+  },
+  "upliftLoadASDData": {
+    "info": "Enter the allowable stress design (ASD) wind demand load. For the load combination under consideration, include all appropriate load factors on the load prior to input.",
+    "validationMethods": ["isEmpty", "validUpliftLoadASD"]
+  },
+  "geometryTypeData": {
+    "info": "Select the foundation type for the application. The graphic at the bottom will update to reflect the selection and clarify the application type when appropriate.",
+    "optionsB": [
+      { "value": "2", "label": "Stemwall" }
+    ],
+    "optionsCMU": [
+      { "value": "2", "label": "Stemwall" }
+    ],
+    "options": {
+      "0": [
+        { "value": "2", "label": "Stemwall" },
+        { "value": "3", "label": "Turned Down Slab" },
+        { "value": "5", "label": "Garage Slab" },
+        { "value": "6", "label": "Garage Stemwall" }
+      ],
+      "1": [
+        { "value": "0", "label": "Elevated Slab" },
+        { "value": "1", "label": "Interior Thickened Footing" },
+        { "value": "2", "label": "Stemwall" },
+        { "value": "3", "label": "Turned Down Slab" },
+        { "value": "4", "label": "Brick Ledge" }
+      ],
+      "2": [
+        { "value": "0", "label": "Elevated Slab" },
+        { "value": "1", "label": "Interior Thickened Footing" },
+        { "value": "2", "label": "Stemwall" },
+        { "value": "3", "label": "Turned Down Slab" },
+        { "value": "4", "label": "Brick Ledge" }
+      ]
+    }
+  },
+  "geometrySubTypeData": {
+    "optionsCMU": [
+      { "value": "0", "label": "End-of-Wall Anchor" },
+      { "value": "1", "label": "Midwall Anchor" }
+    ],
+    "options": {
+      "0": [
+        { "value": "4", "label": "N/A" }
+      ],
+      "1": [
+        { "value": "4", "label": "N/A" }
+      ],
+      "2": [
+        { "value": "0", "label": "End-of-Wall Anchor" },
+        { "value": "1", "label": "Midwall Anchor" },
+        { "value": "2", "label": "Corner Anchor" }
+      ],
+      "3": [
+        { "value": "4", "label": "N/A" }
+      ],
+      "4": [
+        { "value": "0", "label": "End-of-Wall Anchor" },
+        { "value": "1", "label": "Midwall Anchor" },
+        { "value": "2", "label": "Corner Anchor" }
+      ],
+      "5": [
+        { "value": "2", "label": "Corner Anchor" },
+        { "value": "3", "label": "Step Down End Anchor" }
+      ],
+      "6": [
+        { "value": "2", "label": "Corner Anchor" },
+        { "value": "3", "label": "Step Down End Anchor" }
+      ]
+    },
+    "optionsOthers": {
+      "0": [
+        { "value": "4", "label": "N/A" }
+      ],
+      "1": [
+        { "value": "4", "label": "N/A" }
+      ],
+      "2": [
+        { "value": "0", "label": "End-of-Wall Anchor" },
+        { "value": "1", "label": "Midwall Anchor" }
+      ],
+      "3": [
+        { "value": "4", "label": "N/A" }
+      ],
+      "4": [
+        { "value": "0", "label": "End-of-Wall Anchor" },
+        { "value": "1", "label": "Midwall Anchor" }
+      ],
+      "5": [
+        { "value": "3", "label": "Step Down End Anchor" }
+      ],
+      "6": [
+        { "value": "3", "label": "Step Down End Anchor" }
+      ]
+    }
+  },
+  "geometryTypeImages": {
+    "0": [
+      [{ "url": "https://embed.widencdn.net/download/ssttoolbox/nnxxvkya35/SR_URS_InstDtl_Ill_Inst_Anchorage-Foundation-ElevatedSlab_CY.svg",
+         "label": "Anchor in an Elevated Slab Foundation"}],
+      [{ "url": "https://embed.widencdn.net/download/ssttoolbox/ue0wscbxau/SR_URS_InstDtl_Ill_Inst_Anchorage-Foundation-InteriorThickenedSlab-Perspective_CY.svg",
+         "label": "Anchor in an Interior Thickened Footing Foundation"}],
+      [{ "url": "https://embed.widencdn.net/download/ssttoolbox/1ireifjjai/C_SSTB_InstIll_Ill_Instld_Figure2StemwallPerspective_CY.svg",
+         "label": "Anchor in a Stemwall Foundation"},
+       { "url": "https://embed.widencdn.net/download/ssttoolbox/xn8jcuedda/C_SSTB_InstIll_Ill_Instld_Stemwall_CY.svg",
+         "label": "Anchor in a Stemwall Foundation"}],
+      [{ "url": "https://embed.widencdn.net/download/ssttoolbox/uetspzkeb3/SR_URS_InstDtl_Ill_Inst_Anchorage-TurnedDownSlab-StemWall_CY.svg",
+         "label": "Anchor in a Slab Foundation"}],
+      [{ "url": "https://embed.widencdn.net/download/ssttoolbox/lyh2aux6cp/C_SSTB_InstIll_Ill_Instld_Figure3BrickLedgeEndwall_CY.svg",
+         "label": "Anchor in a Brick Ledge Foundation"},
+       { "url": "https://embed.widencdn.net/download/ssttoolbox/jobshpyrzg/C_SSTB_InstIll_Ill_Instld_BrickLedge_CY.svg",
+         "label": "Anchor in a Brick Ledge Foundation"}],
+      [{ "url": "https://embed.widencdn.net/download/ssttoolbox/y0dxxnkt7e/C_SSTB_InstIll_Ill_Instld_Figure5GarageSlabPerspective_CY.svg",
+         "label": "Anchor in a Garage Slab Foundation"}],
+      [{ "url": "https://embed.widencdn.net/download/ssttoolbox/ujtttrflmp/C_SSTB_InstIll_Ill_Instld_Figure6GarageStemwallPerspective_CY.svg",
+         "label": "Anchor in a Garage Stemwall Foundation"}]
+    ],
+    "1": [
+      [{ "url": "https://embed.widencdn.net/download/ssttoolbox/nnxxvkya35/SR_URS_InstDtl_Ill_Inst_Anchorage-Foundation-ElevatedSlab_CY.svg",
+         "label": "Anchor in an Elevated Slab Foundation"}],
+      [{ "url": "https://embed.widencdn.net/download/ssttoolbox/ue0wscbxau/SR_URS_InstDtl_Ill_Inst_Anchorage-Foundation-InteriorThickenedSlab-Perspective_CY.svg",
+         "label": "Anchor in an Interior Thickened Footing Foundation"}],
+      [{ "url": "https://embed.widencdn.net/download/ssttoolbox/1ireifjjai/C_SSTB_InstIll_Ill_Instld_Figure2StemwallPerspective_CY.svg",
+         "label": "Anchor in a Stemwall Foundation"},
+       { "url": "https://embed.widencdn.net/svg/ssttoolbox/3uojcxdkaf/STHD_endwall_in_callout.svg?u=oviqdm",
+         "label": "Anchor in a Stemwall Foundation"}],
+      [{ "url": "https://embed.widencdn.net/download/ssttoolbox/uetspzkeb3/SR_URS_InstDtl_Ill_Inst_Anchorage-TurnedDownSlab-StemWall_CY.svg",
+         "label": "Anchor in a Slab Foundation"}],
+      [{ "url": "https://embed.widencdn.net/download/ssttoolbox/lyh2aux6cp/C_SSTB_InstIll_Ill_Instld_Figure3BrickLedgeEndwall_CY.svg",
+         "label": "Anchor in a Brick Ledge Foundation"},
+       { "url": "https://embed.widencdn.net/download/ssttoolbox/jobshpyrzg/C_SSTB_InstIll_Ill_Instld_BrickLedge_CY.svg",
+         "label": "Anchor in a Brick Ledge Foundation"}],
+      [{ "url": "https://embed.widencdn.net/download/ssttoolbox/y0dxxnkt7e/C_SSTB_InstIll_Ill_Instld_Figure5GarageSlabPerspective_CY.svg",
+         "label": "Anchor in a Garage Slab Foundation"}],
+      [{ "url": "https://embed.widencdn.net/download/ssttoolbox/ujtttrflmp/C_SSTB_InstIll_Ill_Instld_Figure6GarageStemwallPerspective_CY.svg",
+         "label": "Anchor in a Garage Stemwall Foundation"}]
+    ]
+  }
+}
